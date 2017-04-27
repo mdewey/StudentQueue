@@ -10,9 +10,15 @@ namespace StudentQueue.Controllers
     {
         public ActionResult Index()
         {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                ViewBag.IsInstructor = HttpContext.User.IsInRole("instructor");
+                ViewBag.IsStudent = HttpContext.User.IsInRole("student");
+            }
             return View();
         }
 
+        [Authorize(Roles ="student")]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
